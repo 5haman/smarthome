@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  knxd:
+    build: ./build/knxd
+    restart: always
+    volumes:
+      - ./config/knxd:/etc/knxd
+    network_mode: host
+    healthcheck:
+      test: "nc -z localhost 6720"
+      interval: 5s
+      retries: 3       
+
+  mosquitto:
+    build: ./build/mosquitto
+    restart: always
+    #volumes:
+    #  - ./config/homebridge:/root/.homebridge
+    network_mode: host
+    healthcheck:
+      test: "nc -z localhost 1883"
+      interval: 5s
+      retries: 3 
+
+
+  homebridge:
+    build: ./build/homebridge
+    restart: always
+    volumes:
+      - ./config/homebridge:/root/.homebridge
+    network_mode: host
+    healthcheck:
+      test: "nc -z -u localhost 5353 && nc -z localhost 8080 && nc -z localhost 51826"
+      interval: 5s
+      retries: 3 
+
+  node-red:
+    build: ./build/node-red
+    restart: always
+    volumes:
+      - ./config/node-red:/root/.node-red
+    network_mode: host
+    healthcheck:
+      test: "nc -z localhost 8081"
+      interval: 5s
+      retries: 3

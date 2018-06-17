@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/local/bin/knxd /etc/knxd/knxd.ini

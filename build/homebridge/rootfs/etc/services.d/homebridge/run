@@ -1,0 +1,4 @@
+#!/bin/sh
+
+homebridge -I 
+#2>&1 >/var/log/homebridge.log
